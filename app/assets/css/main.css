@@ -1,0 +1,217 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+/* ============================================
+   CUSTOM THEME COLORS - Tailwind v4 @theme
+   ============================================ */
+@theme static {
+  /* --- Primary Blue (#0055b8) --- */
+  --color-blue-50: #e6f0fa;
+  --color-blue-100: #cce0f5;
+  --color-blue-200: #99c2eb;
+  --color-blue-300: #66a3e0;
+  --color-blue-400: #3385d6;
+  --color-blue-500: #0055b8;
+  --color-blue-600: #004494;
+  --color-blue-700: #003370;
+  --color-blue-800: #00224c;
+  --color-blue-900: #001128;
+  --color-blue-950: #000914;
+
+  /* --- Secondary Teal (#0d9488) --- */
+  --color-teal-50: #e6f5f4;
+  --color-teal-100: #ccebe9;
+  --color-teal-200: #9bd7d3;
+  --color-teal-300: #6ac3bd;
+  --color-teal-400: #39afa7;
+  --color-teal-500: #0d9488;
+  --color-teal-600: #0a766d;
+  --color-teal-700: #085952;
+  --color-teal-800: #053b36;
+  --color-teal-900: #031e1b;
+  --color-teal-950: #010f0d;
+
+  /* --- Neutral Slate --- */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* --- Semantic Colors --- */
+  --color-green-50: #f0fdf4;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+
+  --color-amber-50: #fffbeb;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+
+  --color-red-50: #fef2f2;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+
+  --color-sky-50: #f0f9ff;
+  --color-sky-500: #0ea5e9;
+  --color-sky-600: #0284c7;
+
+  /* --- Typography --- */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* ============================================
+   NUXT UI CSS VARIABLES - Design Tokens
+   ============================================ */
+
+/* Light mode defaults */
+:root {
+  /* Semantic color defaults (pointing to 500 shade) */
+  --ui-primary: var(--color-blue-500);
+  --ui-secondary: var(--color-teal-500);
+  --ui-success: var(--color-green-500);
+  --ui-info: var(--color-sky-500);
+  --ui-warning: var(--color-amber-500);
+  --ui-error: var(--color-red-500);
+  --ui-neutral: var(--color-slate-500);
+
+  /* Background colors */
+  --ui-bg: var(--color-slate-50);
+  --ui-bg-elevated: white;
+  --ui-bg-inverted: var(--color-slate-900);
+
+  /* Text colors */
+  --ui-text: var(--color-slate-900);
+  --ui-text-dimmed: var(--color-slate-600);
+  --ui-text-muted: var(--color-slate-400);
+  --ui-text-inverted: white;
+
+  /* Border colors */
+  --ui-border: var(--color-slate-200);
+  --ui-border-accent: var(--color-slate-300);
+  --ui-border-inverted: var(--color-slate-700);
+
+  /* Focus rings */
+  --ui-ring: var(--color-blue-500);
+  --ui-ring-offset: white;
+}
+
+/* Dark mode overrides */
+.dark {
+  /* Semantic colors - use lighter shades for dark mode */
+  --ui-primary: var(--color-blue-400);
+  --ui-secondary: var(--color-teal-400);
+  --ui-success: var(--color-green-400);
+  --ui-info: var(--color-sky-400);
+  --ui-warning: var(--color-amber-400);
+  --ui-error: var(--color-red-400);
+  --ui-neutral: var(--color-slate-400);
+
+  /* Background colors */
+  --ui-bg: var(--color-slate-800);
+  --ui-bg-elevated: var(--color-slate-900);
+  --ui-bg-inverted: var(--color-slate-50);
+
+  /* Text colors */
+  --ui-text: var(--color-slate-50);
+  --ui-text-dimmed: var(--color-slate-400);
+  --ui-text-muted: var(--color-slate-500);
+  --ui-text-inverted: var(--color-slate-800);
+
+  /* Border colors */
+  --ui-border: var(--color-slate-800);
+  --ui-border-accent: var(--color-slate-700);
+  --ui-border-inverted: var(--color-slate-200);
+
+  /* Focus rings */
+  --ui-ring: var(--color-blue-400);
+  --ui-ring-offset: var(--color-slate-950);
+}
+
+/* ============================================
+   CUSTOM UTILITY CLASSES
+   ============================================ */
+
+/* Gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, #0055b8 0%, #0d9488 100%);
+}
+
+.gradient-primary-soft {
+  background: linear-gradient(135deg, #e6f0fa 0%, #e6f5f4 100%);
+}
+
+.dark .gradient-primary-soft {
+  background: linear-gradient(135deg, #001128 0%, #010f0d 100%);
+}
+
+/* Text gradients */
+.text-gradient-primary {
+  background: linear-gradient(135deg, #0055b8 0%, #0d9488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effects */
+.glow-primary {
+  box-shadow: 0 0 20px rgb(0 85 184 / 0.3);
+}
+
+.glow-secondary {
+  box-shadow: 0 0 20px rgb(13 148 136 / 0.3);
+}
+
+/* Glass morphism */
+.glass {
+  background: rgb(255 255 255 / 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgb(255 255 255 / 0.2);
+}
+
+.dark .glass {
+  background: rgb(15 23 42 / 0.7);
+  border: 1px solid rgb(255 255 255 / 0.1);
+}
+
+/* ============================================
+   SMOOTH THEME TRANSITIONS
+   ============================================ */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.4s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
+
+.layout-enter-active,
+.layout-leave-active {
+  transition: all 0.4s;
+}
+.layout-enter-from,
+.layout-leave-to {
+  filter: grayscale(1);
+}
