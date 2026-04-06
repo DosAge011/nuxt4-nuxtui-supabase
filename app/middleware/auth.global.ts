@@ -1,3 +1,14 @@
+/**
+ * Global authentication middleware that runs on all routes.
+ * 
+ * Automatically redirects authenticated users away from auth pages
+ * (login, register, forgot-password) to the home page.
+ * 
+ * This middleware runs globally due to the `.global.ts` suffix.
+ * 
+ * @example
+ * When a logged-in user tries to access `/auth/login`, they are redirected to `/`
+ */
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const user = useSupabaseUser();
   const authPages = ["/auth/login", "/auth/register", "/auth/forgot-password"];

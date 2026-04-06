@@ -14,6 +14,9 @@
 
         <UNavigationMenu :items="items" />
         <template #right>
+          <ClientOnly>
+            <UColorModeButton />
+          </ClientOnly>
           <div v-if="isAuthenticated">
             <UUser
               :name="userDisplayName ?? 'Unknown User'"
@@ -53,12 +56,23 @@
     <slot />
   </div>
 </template>
+
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
+
+/** Current route object for active navigation state */
 const route = useRoute();
+
+/** Auth composable for authentication state and user info */
 const { isAuthenticated, userDisplayName, userAvatarUrl } = useAuth();
+
+/** Current Supabase user with custom claims (user_role, user_metadata) */
 const user = useSupabaseUser();
 
+/**
+ * Computed navigation menu items.
+ * Updates active state based on current route.
+ */
 const items = computed<NavigationMenuItem[]>(() => [
   {
     label: "Home",
@@ -99,6 +113,10 @@ const items = computed<NavigationMenuItem[]>(() => [
   },
 ]);
 
+/**
+ * Computed badge color based on user's role.
+ * Maps roles to semantic colors: admin (success), director (warning), webmaster (error), user (neutral)
+ */
 const getBadgeColor = computed(() => {
   const userRole = (user.value as any)?.user_role;
   if (!userRole) return "neutral";

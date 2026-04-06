@@ -7,10 +7,100 @@
 <p align="center">
   <a href="#features">Features</a> •
   <a href="#quick-start">Quick Start</a> •
+  <a href="#authentication-test-page">Test Page</a> •
   <a href="#role-system">Role System</a> •
   <a href="#securing-pages">Securing Pages</a> •
   <a href="#styling">Styling</a>
 </p>
+
+---
+
+## 🔐 Authentication Test Page
+
+The `/authentication` page is a comprehensive demo and testing interface for the authentication system. It provides real-time visibility into auth state and allows you to test all authentication flows.
+
+### Page Sections
+
+#### 1. Authenticated User Details
+
+Displays the current user's authentication status and key identity information:
+
+| Field | Description | Visual Indicator |
+|-------|-------------|------------------|
+| `isAuthenticated` | Whether a user is currently logged in | 🟢 Green (`true`) / 🔴 Red (`false`) |
+| `UUID` | The user's unique Supabase ID | 🟢 Green when present / 🔴 "N/A" when missing |
+| `Email` | User's email address from `auth.users` | 🟢 Green when present / 🔴 "N/A" when missing |
+| `User Role` | Role from JWT claims (`user_role`) | 🟢 Green when present / 🔴 "N/A" when missing |
+
+> **Note:** These values update in real-time as you log in/out. The color coding makes it easy to visually verify authentication state at a glance.
+
+#### 2. Authentication Actions
+
+Quick login form for testing with pre-filled demo credentials:
+
+```
+Email:    webmaster@webmaster.com
+Password: password
+```
+
+**Available Actions:**
+- **Login** (Primary button) - Signs in with the provided credentials
+- **Logout** (Error/Red button) - Signs out the current user
+
+#### 3. User Management Table
+
+A full `UserRoleManagement` component (only visible when authenticated) that displays:
+
+- **All registered users** with their email, name, and current role
+- **Searchable/filterable** list (filter by email or name)
+- **Role editing** (for authorized users):
+  - **Users & Admins**: View-only (see role badges)
+  - **Directors**: Can assign `user` or `admin` roles
+  - **Webmasters**: Can assign any role (`user`, `admin`, `director`, `webmaster`)
+
+> **Demo Tip:** Log in as a webmaster to see the full role management capabilities, then create test users with different roles to test the permission system.
+
+#### 4. Raw Data Inspector
+
+A collapsible section that displays the complete `user` object from `useSupabaseUser()`:
+
+```json
+{
+  "id": "...",
+  "email": "...",
+  "user_role": "webmaster",
+  "user_metadata": {
+    "first_name": "...",
+    "last_name": "...",
+    "phone_number": "...",
+    "avatar_url": "..."
+  },
+  ...
+}
+```
+
+This is useful for:
+- Debugging JWT claims from the custom auth hook
+- Verifying `user_role` and `user_metadata` are present
+- Inspecting the full Supabase user object structure
+
+### Testing Workflow
+
+1. **Initial Visit** (logged out): All user details show "N/A" in red
+2. **Login**: Click Login with the pre-filled credentials
+3. **Verify Auth State**: All fields turn green, User Management appears
+4. **Test Role Management**: Try changing roles of test users (if webmaster)
+5. **Inspect Raw Data**: Expand "Show Current User Object" to see JWT claims
+6. **Logout**: Click Logout and verify all fields return to "N/A"
+
+### Protected API Testing
+
+The User Management table exercises these protected API endpoints:
+
+| Endpoint | Role Required | Purpose |
+|----------|---------------|---------|
+| `GET /api/users/allusers` | Admin+ | Populates the user list |
+| `PUT /api/users/update-role` | Director+ | Updates user roles |
 
 ---
 

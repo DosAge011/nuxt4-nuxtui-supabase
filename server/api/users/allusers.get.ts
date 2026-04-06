@@ -1,5 +1,46 @@
 import { serverSupabaseClient } from "#supabase/server";
 
+/**
+ * API endpoint to fetch all users with their profiles and roles.
+ * 
+ * **Method:** GET
+ * **Route:** `/api/users/allusers`
+ * 
+ * **Authentication Required:** Yes
+ * **Role Required:** Admin, Director, or Webmaster
+ * 
+ * @returns {Object} Response object containing:
+ *   - `status`: "success" or "error"
+ *   - `message`: Human-readable status message
+ *   - `count`: Number of users returned
+ *   - `data`: Array of user objects with id, email, user_role, first_name, last_name, phone_number, avatar_url
+ * 
+ * @example
+ * **Success Response:**
+ * ```json
+ * {
+ *   "status": "success",
+ *   "message": "Fetched users successfully",
+ *   "count": 3,
+ *   "data": [
+ *     {
+ *       "id": "uuid",
+ *       "email": "user@example.com",
+ *       "user_role": "admin",
+ *       "first_name": "John",
+ *       "last_name": "Doe",
+ *       "phone_number": null,
+ *       "avatar_url": null
+ *     }
+ *   ]
+ * }
+ * ```
+ * 
+ * **Error Responses:**
+ * - `401 Unauthorized`: User not authenticated
+ * - `403 Forbidden`: User lacks required role (admin+)
+ * - `500 Internal Server Error`: Database query failed
+ */
 export default defineEventHandler(async (event) => {
   const client = await serverSupabaseClient(event);
 

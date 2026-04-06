@@ -63,14 +63,10 @@
     </div>
     <USeparator color="primary" class="my-4">User Management</USeparator>
     <div>
-      <!-- <UButton color="secondary" @click="fetchAllUsers"
-        >Fetch All Users (Protected API)</UButton
-      > -->
       <UserRoleManagement v-if="isAuthenticated" />
       <div v-else class="text-error mt-2">
         Please log in to view user management features.
       </div>
-      <!-- <UTable :data="userData" :columns="columns" class="flex-1" /> -->
     </div>
     <USeparator color="primary" class="my-4">Raw Data</USeparator>
     <pre></pre>
@@ -94,15 +90,39 @@
     </UCollapsible>
   </div>
 </template>
+
 <script setup lang="ts">
+/**
+ * Authentication Test Page
+ *
+ * A comprehensive demo and testing interface for the authentication system.
+ * Displays real-time auth state, provides login/logout functionality,
+ * and includes the UserRoleManagement component for role-based testing.
+ *
+ * @see {@link ~/components/UserRoleManagement.vue} for user management table
+ */
+
+/** Auth composable for signIn/signOut and isAuthenticated state */
 const { isAuthenticated, signIn, signOut } = useAuth();
+
+/** Current Supabase user with custom JWT claims (user_role, user_metadata) */
 const user = useSupabaseUser();
 
+/** Toast notification utility */
 const toast = useToast();
 
+/** Email input for login form (pre-filled with demo account) */
 const email = ref("webmaster@webmaster.com");
+
+/** Password input for login form (pre-filled with demo password) */
 const password = ref("password");
 
+/**
+ * Display a toast notification.
+ * @param title - Toast title
+ * @param description - Toast description/message
+ * @param type - Toast type: 'success' or 'error'
+ */
 const showToast = (
   title: string,
   description: string,
@@ -116,6 +136,7 @@ const showToast = (
   });
 };
 </script>
+
 <style lang="css" scoped>
 .details {
   width: 160px;

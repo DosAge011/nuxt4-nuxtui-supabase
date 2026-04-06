@@ -1,5 +1,51 @@
 import { serverSupabaseClient } from "#supabase/server";
 
+/**
+ * API endpoint to update a user's role.
+ * 
+ * **Method:** PUT
+ * **Route:** `/api/users/update-role`
+ * 
+ * **Authentication Required:** Yes
+ * **Role Permissions:**
+ * - Admin: Cannot modify roles (read-only)
+ * - Director: Can only assign 'user' or 'admin' roles
+ * - Webmaster: Can assign any role
+ * 
+ * @param {Object} body - Request body
+ * @param {string} body.userId - UUID of the user to update
+ * @param {string} body.role - New role to assign ('user', 'admin', 'director', 'webmaster')
+ * 
+ * @returns {Object} Response object containing:
+ *   - `status`: "success" or "error"
+ *   - `message`: Human-readable status message
+ *   - `data`: Updated user role record
+ * 
+ * @example
+ * **Request:**
+ * ```json
+ * {
+ *   "userId": "uuid-here",
+ *   "role": "admin"
+ * }
+ * ```
+ * 
+ * **Success Response:**
+ * ```json
+ * {
+ *   "status": "success",
+ *   "message": "User role updated to admin",
+ *   "data": [{ "user_id": "uuid", "role": "admin" }]
+ * }
+ * ```
+ * 
+ * **Error Responses:**
+ * - `400 Bad Request`: Missing userId/role or invalid role value
+ * - `401 Unauthorized`: User not authenticated
+ * - `403 Forbidden`: Insufficient permissions to assign this role
+ * - `405 Method Not Allowed`: Only PUT method is accepted
+ * - `500 Internal Server Error`: Database update failed
+ */
 export default defineEventHandler(async (event) => {
   // Only allow PUT requests
   if (event.method !== "PUT") {
